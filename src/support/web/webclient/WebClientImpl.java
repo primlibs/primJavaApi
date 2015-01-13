@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import support.StringAdapter;
 import support.settings.ProjectSettings;
 import support.settings.SqlSettings;
 
@@ -23,6 +24,7 @@ public class WebClientImpl implements WebClient {
 
   //переформированый запрос, проверенный на параметры, подается в приложение
   private HashMap<String, Object> innerRequest = new HashMap<String, Object>();
+  private HashMap<String, Object> innerSession = new HashMap<String, Object>();
   private ProjectSettings projectSettings;
   private SqlSettings sqlSettings;
   private String renderType = RenderTypes.web.toString();
@@ -209,6 +211,11 @@ public class WebClientImpl implements WebClient {
   public List<UploadedFile> getUploadedFile() {
     return fileList;
   }
+
+    @Override
+    public Map<String, Object> getInnerSession() {
+        return StringAdapter.cloneHashMap(innerSession);
+    }
   
   
   public static enum RenderTypes {

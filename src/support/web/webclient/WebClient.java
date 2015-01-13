@@ -21,6 +21,7 @@ public interface WebClient {
    * @return 
    */
   public Map<String, Object> getInnerRequest();
+  public Map<String, Object> getInnerSession();
 
   /**
    * 

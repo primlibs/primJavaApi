@@ -55,7 +55,7 @@ public class ControllerAbstract implements Controller{
         return  StringAdapter.getString(result);
     }
 
-    Map<String, Object> getRequest() {
+    final public Map<String, Object> getRequest() {
          return StringAdapter.cloneHashMap(request);
     }
        
@@ -86,13 +86,13 @@ public class ControllerAbstract implements Controller{
     }
     
     
-    final void addSession(String name,Object value){
+    final public void addSession(String name,Object value){
         if(StringAdapter.NotNull(name)){
             session.put(name, value);
         }
     }
     
-    final void addResponce(String name,Object value){
+    final public void addResponce(String name,Object value){
         if(StringAdapter.NotNull(name)){
             response.put(name, value);
         }

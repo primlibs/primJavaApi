@@ -14,6 +14,7 @@ import org.apache.commons.codec.binary.Base64;
 import support.StringAdapter;
 import support.enums.Validators;
 import support.filterValidator.ChainValidator;
+import support.settings.ProjectSettings;
 import support.web.AbsEnt;
 import support.web.EnumAttrNoValue;
 import support.web.EnumAttrType;
@@ -33,9 +34,16 @@ import support.web.webclient.WebClientImpl.RenderTypes;
 public final class FabricRender {
 
   public RenderConstant rc = new RenderConstant();
-  private String baseLinkPath = "/unit/index";
+  private String baseLinkPath = "";
   private String renderResult="";
 
+  private FabricRender(ProjectSettings projectSettings){
+      baseLinkPath=projectSettings.getBaseLinkPath();
+  }
+  
+  public static FabricRender getInstance(ProjectSettings projectSettings){
+      return new FabricRender(projectSettings);
+  }
 
 
   public final static AbsEnt img(String img, String width, String height, String style) throws Exception {

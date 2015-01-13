@@ -71,7 +71,7 @@ public class ControllerAbstract implements Controller{
     }
 
 
-    final void setRedirect(String redirect) {
+    final public void setRedirect(String redirect) {
         this.redirect=StringAdapter.getString(redirect);
     }
 

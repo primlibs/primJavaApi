@@ -12,4 +12,5 @@ package support.settings;
 public interface ProjectSettings {
     public int getMaxUploadSizeMb();
     public String getUploadPath();
+    public String getBaseLinkPath();
 }

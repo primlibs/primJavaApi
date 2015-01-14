@@ -6,6 +6,7 @@ package support;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,6 +183,18 @@ public class StringAdapter {
             for (String paramName : request.keySet()) {
                 if (StringAdapter.NotNull(paramName)) {
                     result.put(paramName, request.get(paramName));
+                }
+            }
+        }
+        return result;
+    }
+    
+     public static List<String> cloneList(List<String> request) {
+        List<String> result = new ArrayList();
+        if (request != null) {
+            for (String param : request) {
+                if (StringAdapter.NotNull(param)) {
+                    result.add(param);
                 }
             }
         }

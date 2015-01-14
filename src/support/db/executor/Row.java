@@ -30,6 +30,17 @@ public class Row {
         return params.get(name);
     }
     
+    public Object getFirst() throws Exception{
+        if(params.isEmpty()){
+            throw new Exception("No one params in result");
+        }else{
+          for(String name:params.keySet()){
+            return params.get(name);
+          }
+          return -1;
+        }
+    }
+    
     public List<String> getNames(){
         List<String> names= new ArrayList();
         for(String name:params.keySet()){

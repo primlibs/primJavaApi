@@ -8,11 +8,13 @@ package support.db;
 import support.enums.ColumnTypes;
 import support.enums.DbTypes;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import support.JarScan;
 import support.StringAdapter;
 import support.db.executor.ExecutorFabric;
 import support.db.executor.QueryExecutor;
+import support.db.executor.Row;
 
 /**
  *
@@ -90,8 +92,64 @@ public class Creator {
         return res;
     }
     
+    public static List<Table> getTablesFromSql(Connection con) throws Exception{
+        List<Table> result=new ArrayList();
+        
+        QueryExecutor qe=ExecutorFabric.getExecutor(con, "show tables", DbTypes.MySQL);
+        qe.select();
+        for (Row table:qe.getResultList()){
+            Table resTb = Table.getInstance(StringAdapter.getString(table.getFirst()));
+            QueryExecutor qe1=ExecutorFabric.getExecutor(con, "describe "+table.getFirst(), DbTypes.MySQL);
+            qe.select();
+            for (Row column:qe.getResultList()){
+                String name=StringAdapter.getString(column.get("Field"));
+                ColumnTypes type=findColumnType(column.get("Type"));
+                Boolean isPrimary=isPrimary(column.get("Key"));
+                Boolean isNull=isNull(column.get("Null"));
+                resTb.addColumn(Column.getInstance(name, type, true, true));
+            }
+            result.add(resTb);
+        }
+        return result;
+    }
     
+     private static boolean isNull(Object type){
+         String row=StringAdapter.getString(type);
+         if(row.equals("NO")){
+             return false;
+         }else{
+             return true;
+         }
+     }
     
+     private static boolean isPrimary(Object type){
+         String row=StringAdapter.getString(type);
+         if(row.equals("PRI")){
+             return true;
+         }else{
+             return false;
+         }
+     }
     
+    private static ColumnTypes findColumnType(Object type) throws Exception{
+        String row=StringAdapter.getString(type);
+        row=row.trim();
+        String[] arrayMessage=row.split("\\s+");
+        String typeres="";
+        if(arrayMessage.length<1){
+            throw new Exception("no one word in row");
+        }
+        if(typeres.equals("int")){
+            return ColumnTypes.INTEGER;
+        }else if(typeres.equals("text")){
+            return ColumnTypes.TEXT;
+        }else if(typeres.equals("datetime")||typeres.equals("date")){
+            return ColumnTypes.DATETIME;
+        }else if(typeres.equals("decimal")){
+            return ColumnTypes.DECIMAL;
+        }else{
+            return ColumnTypes.VARCHAR;
+        }
+    }
     
 }

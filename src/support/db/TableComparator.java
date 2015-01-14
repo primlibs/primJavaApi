@@ -77,8 +77,8 @@ public class TableComparator {
     private void compareTable(){
         for(Table systable:systemTable){
             boolean existInSql=false;
-            for(Table sqlTable:sqlTable){
-                if(systable.name.equals(sqlTable.name)){
+            for(Table sqlTabl:sqlTable){
+                if(systable.name.equals(sqlTabl.name)){
                     existInSql=true;
                     TableHandler th=new TableHandler();
                     th.systable=systable;
@@ -90,20 +90,20 @@ public class TableComparator {
             }
         }
         
-        for(Table sqlTable:sqlTable){
+        for(Table sqlTabl:sqlTable){
             boolean onlyInSql=true;
             for(Table systable:systemTable){
-                if(sqlTable.name.equals(sqlTable.name)){
+                if(sqlTabl.name.equals(systable.name)){
                     onlyInSql=false;
                     for(TableHandler th:tableToCompare){
-                        if(th.systable.name.equals(sqlTable.name)){
-                            th.sqlTable=sqlTable;
+                        if(th.systable.name.equals(sqlTabl.name)){
+                            th.sqlTable=sqlTabl;
                         }
                     }
                 }
             }
             if(onlyInSql==true){
-                delete.add(sqlTable);
+                delete.add(sqlTabl);
             }
         }
     }

@@ -101,7 +101,6 @@ public class TableComparator {
                     for (TableHandler th : tableToCompare) {
                         if (th.systable.name.equals(sqlTabl.name)) {
                             th.sqlTable = sqlTabl;
-                            throw new Exception(sqlTabl.name);
                         }
                     }
                 }
@@ -123,45 +122,60 @@ public class TableComparator {
     }
 
     private void compareColumn() throws Exception {
+        String log="";
         for (TableHandler th : tableToCompare) {
-            compareTwoTable(th.systable, th.sqlTable);
+            log+=compareTwoTable(th.systable, th.sqlTable);
         }
+        throw new Exception(log);
     }
 
-    private void compareTwoTable(Table systable, Table sqlTable) throws Exception {
+    private String compareTwoTable(Table systable, Table sqlTable) throws Exception {
+        String log="";
         List<Column> sysCol = systable.getColumns();
         List<Column> sqlCol = sqlTable.getColumns();
         Table createColumn = Table.getInstance(systable.name);
         boolean existInSql = false;
+        log+=1;
         for (Column system : sysCol) {
+            log+=2;
             for (Column sql : sqlCol) {
                 if (system.name.equals(sql.name)) {
                     existInSql = true;
+                    log+=3+system.name;
                 }
             }
             if (existInSql == false) {
+                log+=4+system.name;
                 createColumn.addColumn(Column.getInstance(system.name, system.type, system.isNull, system.isPrimary));
             }
         }
         if (!createColumn.getColumns().isEmpty()) {
+            log+=5+createColumn.name;
             addColumn.add(createColumn);
         }
 
         Table delColumn = Table.getInstance(sqlTable.name);
         boolean existInSystem = false;
+        log+=6;
         for (Column sql : sqlCol) {
+            log+=7;
             for (Column system : sysCol) {
                 if (sql.name.equals(system.name)) {
+                    log+=8+sql.name;
                     existInSystem = true;
                 }
             }
             if (existInSystem == false) {
+                log+=9+sql.name;
                 delColumn.addColumn(Column.getInstance(sql.name, sql.type, sql.isNull, sql.isPrimary));
             }
         }
         if (!delColumn.getColumns().isEmpty()) {
+            log+=5+delColumn.name;
             dropColumn.add(delColumn);
         }
+        log+="12";
+        return log;
     }
 
     private class TableHandler {

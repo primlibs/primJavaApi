@@ -23,15 +23,23 @@ import support.db.executor.Row;
 public class Creator {
     private Creator(){
         
-    }
-    
-    public static void saveNewtables(Connection con,Class startclass) throws Exception{
-        saveTables(con,DbTypes.MySQL, Persistence.getInstance().createTableFromJar(startclass));
-    }
-    
-    static boolean saveTables(Connection con,DbTypes type, List<Table>  table) throws Exception{
+    }    
+    public static boolean createTables(Connection con,DbTypes type, List<Table>  table) throws Exception{
         for(Table tb:table){
             String query= getSaveTableQuery(type, tb);
+            QueryExecutor qe=ExecutorFabric.getExecutor(con, query, type);
+            if(qe.update()){
+                
+            }else{
+                throw new Exception(StringAdapter.getStringFromList(qe.getError()));
+            }
+        }
+        return true;
+    }
+    
+    public static boolean dropTables(Connection con,DbTypes type, List<Table>  table) throws Exception{
+        for(Table tb:table){
+            String query= getDropTableQuery(type, tb);
             QueryExecutor qe=ExecutorFabric.getExecutor(con, query, type);
             if(qe.update()){
                 
@@ -50,6 +58,22 @@ public class Creator {
             throw new Exception("DbType equals "+type+" not supported yet");
         }
     }
+    
+    
+    private static String getDropTableQuery(DbTypes type,Table table) throws Exception{
+        if(type.equals(DbTypes.MySQL)){
+            return getSaveTableQueryMysql(table);
+        }else{
+            throw new Exception("DbType equals "+type+" not supported yet");
+        }
+    }
+    
+    
+    private static String getDropTableQueryMysql(Table table) throws Exception{
+        String query= " drop table "+table.name+";";
+        return query;
+    }
+    
     
     private static String getSaveTableQueryMysql(Table table) throws Exception{
         String query= " Create table if not exists "+table.name+"( ";

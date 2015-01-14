@@ -94,19 +94,18 @@ public class Creator {
     
     public static List<Table> getTablesFromSql(Connection con) throws Exception{
         List<Table> result=new ArrayList();
-        
         QueryExecutor qe=ExecutorFabric.getExecutor(con, "show tables", DbTypes.MySQL);
         qe.select();
         for (Row table:qe.getResultList()){
             Table resTb = Table.getInstance(StringAdapter.getString(table.getFirst()));
-            QueryExecutor qe1=ExecutorFabric.getExecutor(con, "describe "+resTb, DbTypes.MySQL);
+            QueryExecutor qe1=ExecutorFabric.getExecutor(con, "describe "+table.getFirst(), DbTypes.MySQL);
             qe1.select();
             for (Row column:qe1.getResultList()){
                 String name=StringAdapter.getString(column.get("Field"));
                 ColumnTypes type=findColumnType(column.get("Type"));
                 Boolean isPrimary=isPrimary(column.get("Key"));
                 Boolean isNull=isNull(column.get("Null"));
-                resTb.addColumn(Column.getInstance(name, type, true, true));
+                resTb.addColumn(Column.getInstance(name, type, isNull, isPrimary));
             }
             result.add(resTb);
         }
@@ -138,14 +137,16 @@ public class Creator {
         String typeres="";
         if(arrayMessage.length<1){
             throw new Exception("no one word in row");
+        }else{
+            typeres=arrayMessage[0];
         }
-        if(typeres.equals("int")){
+        if(typeres.contains("int")){
             return ColumnTypes.INTEGER;
-        }else if(typeres.equals("text")){
+        }else if(typeres.contains("text")){
             return ColumnTypes.TEXT;
-        }else if(typeres.equals("datetime")||typeres.equals("date")){
+        }else if(typeres.contains("date")){
             return ColumnTypes.DATETIME;
-        }else if(typeres.equals("decimal")){
+        }else if(typeres.contains("decimal")){
             return ColumnTypes.DECIMAL;
         }else{
             return ColumnTypes.VARCHAR;

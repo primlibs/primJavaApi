@@ -73,7 +73,7 @@ public class Creator {
             if (qe.update()) {
 
             } else {
-                throw new Exception(StringAdapter.getStringFromList(qe.getError()));
+                throw new Exception(StringAdapter.getStringFromList(qe.getError())+query);
             }
         }
         return true;

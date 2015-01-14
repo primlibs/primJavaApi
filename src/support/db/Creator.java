@@ -99,9 +99,9 @@ public class Creator {
         qe.select();
         for (Row table:qe.getResultList()){
             Table resTb = Table.getInstance(StringAdapter.getString(table.getFirst()));
-            QueryExecutor qe1=ExecutorFabric.getExecutor(con, "describe "+table.getFirst(), DbTypes.MySQL);
-            qe.select();
-            for (Row column:qe.getResultList()){
+            QueryExecutor qe1=ExecutorFabric.getExecutor(con, "describe "+resTb, DbTypes.MySQL);
+            qe1.select();
+            for (Row column:qe1.getResultList()){
                 String name=StringAdapter.getString(column.get("Field"));
                 ColumnTypes type=findColumnType(column.get("Type"));
                 Boolean isPrimary=isPrimary(column.get("Key"));
@@ -113,7 +113,7 @@ public class Creator {
         return result;
     }
     
-     private static boolean isNull(Object type){
+     public static boolean isNull(Object type){
          String row=StringAdapter.getString(type);
          if(row.equals("NO")){
              return false;
@@ -122,7 +122,7 @@ public class Creator {
          }
      }
     
-     private static boolean isPrimary(Object type){
+     public static boolean isPrimary(Object type){
          String row=StringAdapter.getString(type);
          if(row.equals("PRI")){
              return true;
@@ -131,7 +131,7 @@ public class Creator {
          }
      }
     
-    private static ColumnTypes findColumnType(Object type) throws Exception{
+    public static ColumnTypes findColumnType(Object type) throws Exception{
         String row=StringAdapter.getString(type);
         row=row.trim();
         String[] arrayMessage=row.split("\\s+");

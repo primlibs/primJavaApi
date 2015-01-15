@@ -15,7 +15,7 @@ import java.util.Map;
 import support.JarScan;
 import support.StringAdapter;
 import support.logic.Right;
-import support.logic.RightObject;
+import support.logic.RightStack;
 
 /**
  *
@@ -72,8 +72,8 @@ public class Persistence {
         return result;
     }
        
-    public RightObject createRightsFromJar(Class startclass) throws Exception {
-        RightObject result= RightObject.getInstance();
+    public RightStack createRightsFromJar(Class startclass) throws Exception {
+        RightStack result= RightStack.getInstance();
         Collection string = JarScan.scanClasses(JarScan.getFilePathToClasses(startclass));
 
         for (Object cls : string) {

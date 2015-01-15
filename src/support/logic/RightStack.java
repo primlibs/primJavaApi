@@ -13,15 +13,15 @@ import support.StringAdapter;
  *
  * @author Кот
  */
-public class RightObject {
+public class RightStack {
     private List<Right> rights= new ArrayList();
     
-    private RightObject(){
+    private RightStack(){
         
     }
     
-    public static RightObject getInstance(){
-        return new RightObject();
+    public static RightStack getInstance(){
+        return new RightStack();
     }
     
     public void add(String object,String action) throws Exception{

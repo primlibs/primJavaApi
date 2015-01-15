@@ -28,6 +28,10 @@ public class RightStack {
             rights.add(Right.valueOf(object, action));
     }
     
+    public void add(String object,String action,String objectDescription,String actionDescription) throws Exception{
+            rights.add(Right.valueOf(object, action,objectDescription,actionDescription));
+    }
+    
     public boolean isRight(String object,String action){
         boolean result =false;
         for(Right right:rights){

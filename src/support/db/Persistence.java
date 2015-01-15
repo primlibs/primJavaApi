@@ -80,11 +80,14 @@ public class Persistence {
             Class cl = Class.forName(cls.toString());
             
             if (cl.isAnnotationPresent(support.commons.Controller.class)) {
+                
                 Object obj = cl.newInstance(); 
+                support.commons.Controller contAnn = obj.getClass().getAnnotation(support.commons.Controller.class);
                 Method[] methods=obj.getClass().getDeclaredMethods();
                 for(Method method:methods){
                     if(method.isAnnotationPresent(support.commons.Right.class)){
-                        result.add(cl.getName(), method.getName());
+                        support.commons.Right methAnn = method.getClass().getAnnotation(support.commons.Right.class);
+                        result.add(cl.getName(), method.getName(),contAnn.description(),methAnn.description());
                     }
                 }
                 

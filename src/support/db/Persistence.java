@@ -85,12 +85,7 @@ public class Persistence {
                 for (Method method : methods) {
                     if (method.isAnnotationPresent(support.commons.Right.class)) {
                         support.commons.Right methAnn = method.getAnnotation(support.commons.Right.class);
-                        if(methAnn==null){
-                                throw new Exception("xxxxx");
-                            }
-                        result.add(
-                                cl.getName(),
-                                method.getName());
+                        result.add(cl.getName(),method.getName(),contAnn.description(),methAnn.description());
                     }
                 }
 

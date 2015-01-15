@@ -81,13 +81,13 @@ public class Persistence {
 
                 Object obj = cl.newInstance();
                 support.commons.Controller contAnn = obj.getClass().getAnnotation(support.commons.Controller.class);
-                if(contAnn==null){
-                    throw new Exception("xxxxx");
-                }
                 Method[] methods = obj.getClass().getDeclaredMethods();
                 for (Method method : methods) {
                     if (method.isAnnotationPresent(support.commons.Right.class)) {
-                        support.commons.Right methAnn = method.getClass().getAnnotation(support.commons.Right.class);
+                        support.commons.Right methAnn = method.getAnnotation(support.commons.Right.class);
+                        if(methAnn==null){
+                                throw new Exception("xxxxx");
+                            }
                         result.add(
                                 cl.getName(),
                                 method.getName());

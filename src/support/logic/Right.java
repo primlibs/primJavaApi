@@ -42,5 +42,13 @@ public class Right {
     public String getAction(){
         return action;
     }
-    
+
+    public String getObjectDescription() {
+        return objectDescription;
+    }
+
+    public String getActionDescription() {
+        return actionDescription;
+    }
+
 }

@@ -158,7 +158,7 @@ public class Dao {
                     } else {
                         support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
                         if (col.isEdit() == true) {
-                            if (cnt < 0) {
+                            if (cnt > 0) {
                                 mysqlQuery += ", ";
                             }
                             if (fd.get(ob) != null) {

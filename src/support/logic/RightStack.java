@@ -46,7 +46,7 @@ public class RightStack {
     public List<Right> getRights() throws Exception{
         List<Right> result= new ArrayList();
         for(Right right:rights){
-            result.add(Right.valueOf(right.getObject(), right.getAction()));
+            result.add(Right.valueOf(right.getObject(), right.getAction(),right.getObjectDescription(),right.getActionDescription()));
         }
         return result;
     }

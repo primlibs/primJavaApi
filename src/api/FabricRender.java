@@ -803,17 +803,22 @@ public final class FabricRender {
         return getImgByContent(encodeContent, width, height, style);
     }
 
-    public Map<String, Object> createComboMap(List<Row> query, String... names) {
+    public Map<String, Object> createComboMap(List<Row> query, String... names) throws Exception {
         Map<String, Object> map = new LinkedHashMap();
         List<String> nameList = Arrays.asList(names);
         List<String> namesDescription=new ArrayList();
-        if (nameList != null && !nameList.isEmpty()) { 
+        for(String st:nameList){
+            if(nameList.indexOf(st)!=0){
+                namesDescription.add(st);
+            }
+        }
+        if (namesDescription != null && !namesDescription.isEmpty()) { 
             String id=nameList.get(0);
             if (query != null) {
                 for (Row row : query) {
                     String name="";
                     List<Object> values= row.getValues(namesDescription);
-                    map.put(id, StringAdapter.getStringFromObjectList(values));
+                    map.put(StringAdapter.getString(row.get(id)), StringAdapter.getStringFromObjectList(values));
                 }
             }
         }

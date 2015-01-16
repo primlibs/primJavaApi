@@ -68,4 +68,13 @@ public class Table {
         }
         return result;
     }
+    
+    public boolean havePrimary(){
+        for(Column cl:columns){
+            if(cl.isPrimary){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -54,7 +54,7 @@ public class Dao {
     }
 
     public Object save(Object ob) throws Exception {
-        Object id=null;
+        Object id = null;
         if (ob.getClass().isAnnotationPresent(support.commons.db.Table.class)) {
             support.commons.db.Table tabl = (support.commons.db.Table) ob.getClass().getAnnotation(support.commons.db.Table.class);
             String mysqlQuery = "insert into " + tabl.name() + " set ";
@@ -79,10 +79,10 @@ public class Dao {
                             mysqlQuery += col.name() + "='" + value + "'";
                         }
                         cnt++;
-                    }else{
-                        Object value=fd.get(ob);
-                        if(value!=null){
-                            throw new Exception ("Primary key must be null but "+value);
+                    } else {
+                        Object value = fd.get(ob);
+                        if (value != null) {
+                            throw new Exception("Primary key must be null but " + value);
                         }
                     }
                 }
@@ -91,17 +91,17 @@ public class Dao {
             qe.update();
             if (!qe.getError().isEmpty()) {
                 throw new Exception(StringAdapter.getStringFromList(qe.getError()));
-            }else{
-                QueryExecutor query = ExecutorFabric.getExecutor(connection, "SELECT LAST_INSERT_ID() id",DbTypes.MySQL);
+            } else {
+                QueryExecutor query = ExecutorFabric.getExecutor(connection, "SELECT LAST_INSERT_ID() id", DbTypes.MySQL);
                 query.select();
-                if(query.getError().isEmpty()){
-                    if(query.getResultList().isEmpty()){
-                        throw new Exception ("Insert does not success");
-                    }else{
-                        id=query.getResultList().get(0).get("id");
+                if (query.getError().isEmpty()) {
+                    if (query.getResultList().isEmpty()) {
+                        throw new Exception("Insert does not success");
+                    } else {
+                        id = query.getResultList().get(0).get("id");
                     }
-                }else{
-                    throw new Exception (StringAdapter.getStringFromList(query.getError()));
+                } else {
+                    throw new Exception(StringAdapter.getStringFromList(query.getError()));
                 }
             }
         } else {
@@ -115,9 +115,11 @@ public class Dao {
             support.commons.db.Table tabl = (support.commons.db.Table) ob.getClass().getAnnotation(support.commons.db.Table.class);
             String mysqlQuery = "delete from " + tabl.name() + " where ";
             Field[] fds = ob.getClass().getDeclaredFields();
+            Boolean havePrimary = false;
             for (Field fd : fds) {
                 if (fd.isAnnotationPresent(support.commons.db.Column.class)) {
                     if (fd.isAnnotationPresent(support.commons.db.Primary.class)) {
+                        havePrimary = true;
                         support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
                         if (fd.get(ob) != null) {
                             Object value = fd.get(ob);
@@ -128,6 +130,23 @@ public class Dao {
                     }
                 }
             }
+            if (havePrimary == false) {
+                int cnt=0;
+                for (Field fd : fds) {
+                    if (fd.isAnnotationPresent(support.commons.db.Column.class)) {
+                        support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
+                        if (fd.get(ob) != null) {
+                            Object value = fd.get(ob);
+                            if(cnt>0){
+                                mysqlQuery +=" , ";
+                            }
+                                mysqlQuery += col.name() + "='" + value + "'";
+                            } 
+                        cnt++;
+                    }
+                }
+            }
+
             QueryExecutor qe = ExecutorFabric.getExecutor(connection, mysqlQuery, DbTypes.MySQL);
             qe.update();
             if (!qe.getError().isEmpty()) {
@@ -173,11 +192,11 @@ public class Dao {
                     }
                 }
             }
-            mysqlQuery=mysqlQuery+whereCondition;
+            mysqlQuery = mysqlQuery + whereCondition;
             QueryExecutor qe = ExecutorFabric.getExecutor(connection, mysqlQuery, DbTypes.MySQL);
             qe.update();
             if (!qe.getError().isEmpty()) {
-                throw new Exception(StringAdapter.getStringFromList(qe.getError())+qe.getQueryText());
+                throw new Exception(StringAdapter.getStringFromList(qe.getError()) + qe.getQueryText());
             }
         } else {
             throw new Exception("only @Table annotation object resolve");

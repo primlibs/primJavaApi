@@ -259,7 +259,7 @@ public class Dao {
                 }
             }
             QueryExecutor qe = ExecutorFabric.getExecutor(connection, mysqlQuery, DbTypes.MySQL);
-            qe.select();
+            qe.update();
             if (!qe.getError().isEmpty()) {
                 throw new Exception(StringAdapter.getStringFromList(qe.getError()));
             }

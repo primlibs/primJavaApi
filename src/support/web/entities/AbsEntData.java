@@ -86,6 +86,12 @@ final class AbsEntData {
       javascript = o.toString();
     }
   }
+  
+  public final void addJs(Object o) {
+    if (o != null) {
+      javascript += o.toString();
+    }
+  }
 
   public final String getJs() {
     return javascript;

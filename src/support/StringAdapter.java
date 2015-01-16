@@ -164,7 +164,15 @@ public class StringAdapter {
     public static String getStringFromList(List<String> strList) {
         String result = "";
         for (String obj : strList) {
-            result += obj;
+            result +=" "+obj;
+        }
+        return result;
+    }
+    
+    public static String getStringFromObjectList(List<Object> strList) {
+        String result = "";
+        for (Object obj : strList) {
+            result +=" "+StringAdapter.getString(obj);
         }
         return result;
     }

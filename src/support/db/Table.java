@@ -36,7 +36,7 @@ public class Table {
         }
         for (Column col : columns) {
             if (col.name.equals(column.name)) {
-                throw new Exception("Tho colums has equal name");
+                throw new Exception("Two colums has equal name");
             }
         }
 

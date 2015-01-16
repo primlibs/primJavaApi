@@ -48,25 +48,31 @@ public class Persistence {
 
     public Table createTableFromAnnotationObject(Object ob) throws Exception {
         Table result = null;
+
         if (ob.getClass().isAnnotationPresent(support.commons.db.Table.class)) {
             support.commons.db.Table tabl = (support.commons.db.Table) ob.getClass().getAnnotation(support.commons.db.Table.class);
             result = Table.getInstance(tabl.name());
             Field[] fds = ob.getClass().getDeclaredFields();
             for (Field fd : fds) {
-                if (fd.isAnnotationPresent(support.commons.db.Column.class)) {
-                    Column column;
-                    support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
-                    if (fd.isAnnotationPresent(support.commons.db.Primary.class)) {
-                        column = Column.getInstance(col.name(), col.type(), col.isNull(), true);
-                    } else {
-                        column = Column.getInstance(col.name(), col.type(), col.isNull(), false);
+                try {
+                    if (fd.isAnnotationPresent(support.commons.db.Column.class)) {
+                        Column column;
+                        support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
+                        if (fd.isAnnotationPresent(support.commons.db.Primary.class)) {
+                            column = Column.getInstance(col.name(), col.type(), col.isNull(), true);
+                        } else {
+                            column = Column.getInstance(col.name(), col.type(), col.isNull(), false);
+                        }
+                        result.addColumn(column);
                     }
-                    result.addColumn(column);
+                } catch (Exception ex) {
+                    throw new Exception(ex.getMessage() + " by table "+result.name);
                 }
             }
         } else {
             throw new Exception("Only @table annotation resolve object " + ob.getClass());
         }
+
         return result;
     }
 
@@ -85,7 +91,7 @@ public class Persistence {
                 for (Method method : methods) {
                     if (method.isAnnotationPresent(support.commons.Right.class)) {
                         support.commons.Right methAnn = method.getAnnotation(support.commons.Right.class);
-                        result.add(cl.getName(),method.getName(),contAnn.description(),methAnn.description());
+                        result.add(cl.getName(), method.getName(), contAnn.description(), methAnn.description());
                     }
                 }
 

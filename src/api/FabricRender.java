@@ -807,10 +807,12 @@ public final class FabricRender {
         Map<String, Object> map = new LinkedHashMap();
         List<String> nameList = Arrays.asList(names);
         List<String> namesDescription=new ArrayList();
+        int cnt=0;
         for(String st:nameList){
-            if(nameList.indexOf(st)!=0){
+            if(cnt!=0){
                 namesDescription.add(st);
             }
+            cnt++;
         }
         if (namesDescription != null && !namesDescription.isEmpty()) { 
             String id=nameList.get(0);

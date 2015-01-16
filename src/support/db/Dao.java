@@ -138,7 +138,7 @@ public class Dao {
                         if (fd.get(ob) != null) {
                             Object value = fd.get(ob);
                             if(cnt>0){
-                                mysqlQuery +=" , ";
+                                mysqlQuery +=" and ";
                             }
                                 mysqlQuery += col.name() + "='" + value + "'";
                             } 
@@ -146,11 +146,10 @@ public class Dao {
                     }
                 }
             }
-
             QueryExecutor qe = ExecutorFabric.getExecutor(connection, mysqlQuery, DbTypes.MySQL);
             qe.update();
             if (!qe.getError().isEmpty()) {
-                throw new Exception(StringAdapter.getStringFromList(qe.getError()));
+                throw new Exception(StringAdapter.getStringFromList(qe.getError())+qe.getQueryText());
             }
         } else {
             throw new Exception("only @Table annotation object resolve");

@@ -655,9 +655,7 @@ public final class FabricRender {
                 formSumbit.setCss(fo.getButtonCssClass());
             }
             buttonTd.addEnt(formSumbit);
-        } else {
-            buttonTd.addEnt(WebEnt.getEnt(WebEnt.Type.BUTTON).setValue(fo.getВuttonName()));
-        }
+        } 
 
         if (fo.isPlaceButtonAtBegin()) {
             tr.addEnt(buttonTd);
@@ -726,12 +724,7 @@ public final class FabricRender {
             }
             td.addEnt(formSumbit);
             tr.addEnt(td);
-        } else {
-            AbsEnt td = WebEnt.getEnt(WebEnt.Type.TD);
-            AbsEnt td1 = WebEnt.getEnt(WebEnt.Type.TD);
-            td.addEnt(WebEnt.getEnt(WebEnt.Type.BUTTON).setValue(fo.getВuttonName()));
-            tr.addEnt(td1, td);
-        }
+        } 
         ae.addEnt(hiddenInput("submit", "submit"));
         return ae;
     }

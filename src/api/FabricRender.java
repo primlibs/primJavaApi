@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.codec.binary.Base64;
@@ -805,8 +806,8 @@ public final class FabricRender {
 
     public Map<String, Object> createComboMap(List<Row> query, String... names) {
         Map<String, Object> map = new LinkedHashMap();
-        List<String> nameList = Arrays.asList(names);
-        if (nameList != null || !nameList.isEmpty()) { 
+        List<String> nameList = new LinkedList<String>(Arrays.asList(names));;
+        if (nameList != null && !nameList.isEmpty()) { 
             String id=nameList.remove(0);
             if (query != null) {
                 for (Row row : query) {

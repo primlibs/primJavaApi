@@ -184,18 +184,14 @@ final class MysqlExecutor implements QueryExecutor {
                         String columnName = metaData.getColumnLabel(i);
                         Object value = queryResult.getObject(i);
                         int type = metaData.getColumnType(i);
-                        if (!(value == null)&&value.equals("NULL")) {
-                            value = "";
-                        } else {
-                            try {
-                                if ((type == Types.TIMESTAMP) & !(value == null)) {
-                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                    value = (Object) format.format(value);
-                                }
-                            } catch (Exception e) {
-                                error.add("error " + value + " " + type);
-                                error.add(StringAdapter.getStackTraceException(e));
+                        try {
+                            if ((type == Types.TIMESTAMP) & !(value == null)) {
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                value = (Object) format.format(value);
                             }
+                        } catch (Exception e) {
+                            error.add("error " + value + " " + type);
+                            error.add(StringAdapter.getStackTraceException(e));
                         }
 
                         map.put(columnName, value);

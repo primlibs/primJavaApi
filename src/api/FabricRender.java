@@ -672,7 +672,7 @@ public final class FabricRender {
             }
             buttonTd.addEnt(formSumbit);
         } else {
-            buttonTd.addEnt(WebEnt.getEnt(WebEnt.Type.BUTTON).setValue(fo.getВuttonName()).setCss(fo.getButtonCssClass()));
+            buttonTd.addEnt(WebEnt.getEnt(WebEnt.Type.BUTTON).setValue(fo.getВuttonName()).setCss(rc.SUBMIT_CSS));
         }
 
         if (fo.isPlaceButtonAtBegin()) {
@@ -684,6 +684,7 @@ public final class FabricRender {
                 if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
                     tr.addEnt(aee);
                 } else {
+                    aee.addAttribute(EnumAttrType.style, rc.FORM_ELEMENT_STYLE);
                     AbsEnt td1 = WebEnt.getEnt(WebEnt.Type.TD);
                     if (idMap != null && idMap.get(aee) != null) {
                         td1.setId(idMap.get(aee));
@@ -716,6 +717,7 @@ public final class FabricRender {
                 if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
                     table.addEnt(aee);
                 } else {
+                    aee.addAttribute(EnumAttrType.style, rc.FORM_ELEMENT_STYLE);
                     AbsEnt tr = WebEnt.getEnt(WebEnt.Type.TR);
                     if (idMap != null && idMap.get(aee) != null) {
                         tr.setId(idMap.get(aee));
@@ -746,7 +748,7 @@ public final class FabricRender {
         } else {
             AbsEnt td = WebEnt.getEnt(WebEnt.Type.TD);
             AbsEnt td1 = WebEnt.getEnt(WebEnt.Type.TD);
-            td.addEnt(WebEnt.getEnt(WebEnt.Type.BUTTON).setValue(fo.getВuttonName()).setCss(fo.getButtonCssClass()));
+            td.addEnt(WebEnt.getEnt(WebEnt.Type.BUTTON).setValue(fo.getВuttonName()).setCss(rc.SUBMIT_CSS));
             tr.addEnt(td1, td);
         }
         ae.addEnt(hiddenInput("submit", "submit"));
@@ -754,7 +756,9 @@ public final class FabricRender {
     }
 
     public FormOptionInterface getFormOption() {
-        return FormOption.getInstance();
+        FormOption fo=FormOption.getInstance();
+        fo.setButtonCssClass(rc.BUTTON_CSS);
+        return fo;
     }
 
     public AbsEnt href(Map<String, Object> params, HrefOptionInterface ho) throws Exception {

@@ -77,7 +77,7 @@ public abstract class ValidatorAbstract implements Cloneable, Serializable {
      }else if(type.equals(Validators.PERCENTVALIDATOR)){
          return new PercentValidator();
      }else{
-         throw new Exception ("validator name"+type+"not supported yet");
+         throw new Exception ("validator name "+type+" not supported yet");
      }
     } catch (Exception e) {
       throw new Exception(StringAdapter.getStackTraceException(e));

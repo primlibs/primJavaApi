@@ -237,6 +237,41 @@ public class Dao {
         return result;
     }
     
+        public List<Row> findByPrimary(Object ob) throws Exception {
+        List<Row> result = new ArrayList();
+        if (ob.getClass().isAnnotationPresent(support.commons.db.Table.class)) {
+            support.commons.db.Table tabl = (support.commons.db.Table) ob.getClass().getAnnotation(support.commons.db.Table.class);
+            String mysqlQuery = "select * from " + tabl.name() + " where ";
+            Field[] fds = ob.getClass().getDeclaredFields();
+            int cnt = 0;
+            for (Field fd : fds) {
+                if (fd.isAnnotationPresent(support.commons.db.Column.class)) {
+                    if (fd.isAnnotationPresent(support.commons.db.Primary.class)) {
+                        support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
+                        if (fd.get(ob) != null) {
+                            if (cnt > 0) {
+                                mysqlQuery += " and ";
+                            }
+                            mysqlQuery += col.name() + "='" + fd.get(ob) + "'";
+                            cnt++;
+                        }
+
+                    }
+                }
+            }
+            QueryExecutor qe = ExecutorFabric.getExecutor(connection, mysqlQuery, DbTypes.MySQL);
+            qe.select();
+            if (!qe.getError().isEmpty()) {
+                throw new Exception(StringAdapter.getStringFromList(qe.getError()));
+            } else {
+                result = qe.getResultList();
+            }
+        } else {
+            throw new Exception("only @Table annotation object resolve");
+        }
+        return result;
+    }
+        
     public void deleteByValues(Object ob) throws Exception{
        if (ob.getClass().isAnnotationPresent(support.commons.db.Table.class)) {
             support.commons.db.Table tabl = (support.commons.db.Table) ob.getClass().getAnnotation(support.commons.db.Table.class);

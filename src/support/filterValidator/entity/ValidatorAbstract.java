@@ -70,6 +70,8 @@ public abstract class ValidatorAbstract implements Cloneable, Serializable {
          return new DecimalValidator();
      }else if(type.equals(Validators.NOTNULLSTRINGVALIDATOR)){
          return new NotNullStringValidator();
+     }else if(type.equals(Validators.PERCENTVALIDATOR)){
+         return new PercentValidator();
      }else{
          throw new Exception ("validator name"+type+"not supported yet");
      }

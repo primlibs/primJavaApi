@@ -131,17 +131,17 @@ public class Dao {
                 }
             }
             if (havePrimary == false) {
-                int cnt=0;
+                int cnt = 0;
                 for (Field fd : fds) {
                     if (fd.isAnnotationPresent(support.commons.db.Column.class)) {
                         support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
                         if (fd.get(ob) != null) {
                             Object value = fd.get(ob);
-                            if(cnt>0){
-                                mysqlQuery +=" and ";
+                            if (cnt > 0) {
+                                mysqlQuery += " and ";
                             }
-                                mysqlQuery += col.name() + "='" + value + "'";
-                            } 
+                            mysqlQuery += col.name() + "='" + value + "'";
+                        }
                         cnt++;
                     }
                 }
@@ -149,7 +149,7 @@ public class Dao {
             QueryExecutor qe = ExecutorFabric.getExecutor(connection, mysqlQuery, DbTypes.MySQL);
             qe.update();
             if (!qe.getError().isEmpty()) {
-                throw new Exception(StringAdapter.getStringFromList(qe.getError())+qe.getQueryText());
+                throw new Exception(StringAdapter.getStringFromList(qe.getError()) + qe.getQueryText());
             }
         } else {
             throw new Exception("only @Table annotation object resolve");
@@ -236,8 +236,44 @@ public class Dao {
         }
         return result;
     }
-    
-        public List<Row> findByPrimary(Object ob) throws Exception {
+
+    public List<Object> findByPrimary(Object ob) throws Exception {
+        List<Object> result = new ArrayList();
+        List<Row> data = findByPrimaryRow(ob);
+        support.commons.db.Table tabl = (support.commons.db.Table) ob.getClass().getAnnotation(support.commons.db.Table.class);
+        for (Row row : data) {
+            Class cl = ob.getClass();
+            Object aimObject = cl.newInstance();
+            Field[] fds = aimObject.getClass().getDeclaredFields();
+            for (Field fd : fds) {
+                if (fd.isAnnotationPresent(support.commons.db.Column.class)) {
+                    Class fieldType = fd.getType();
+                    Field field = cl.getField(fd.getName());
+                    Object value = null;
+                    support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
+                    Object baseValue = row.get(col.name());
+                    if (baseValue != null) {
+                        if (fieldType.equals(Long.class)) {
+                            value=Long.valueOf(StringAdapter.getString(baseValue));
+                        } else if (fieldType.equals(Date.class)) {
+                           value=DateAdapter.getDateFromString(StringAdapter.getString(baseValue));
+                        } else if (fieldType.equals(String.class)) {
+                           value=StringAdapter.getString(baseValue);
+                        } else if(fieldType.equals(Double.class)){
+                            value=Double.valueOf(StringAdapter.getString(baseValue));
+                        }else{
+                           throw new Exception("such type not supported " + fieldType);
+                        }
+                    }
+                    field.set(aimObject, value);
+                }
+            }
+            result.add(aimObject);
+        }
+        return result;
+    }
+
+    private List<Row> findByPrimaryRow(Object ob) throws Exception {
         List<Row> result = new ArrayList();
         if (ob.getClass().isAnnotationPresent(support.commons.db.Table.class)) {
             support.commons.db.Table tabl = (support.commons.db.Table) ob.getClass().getAnnotation(support.commons.db.Table.class);
@@ -271,9 +307,9 @@ public class Dao {
         }
         return result;
     }
-        
-    public void deleteByValues(Object ob) throws Exception{
-       if (ob.getClass().isAnnotationPresent(support.commons.db.Table.class)) {
+
+    public void deleteByValues(Object ob) throws Exception {
+        if (ob.getClass().isAnnotationPresent(support.commons.db.Table.class)) {
             support.commons.db.Table tabl = (support.commons.db.Table) ob.getClass().getAnnotation(support.commons.db.Table.class);
             String mysqlQuery = "delete from " + tabl.name() + " where ";
             Field[] fds = ob.getClass().getDeclaredFields();

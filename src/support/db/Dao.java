@@ -252,7 +252,7 @@ public class Dao {
                     Object value = null;
                     support.commons.db.Column col = fd.getAnnotation(support.commons.db.Column.class);
                     Object baseValue = row.get(col.name());
-                    if (baseValue != null) {
+                    if (StringAdapter.NotNull(baseValue)) {
                         if (fieldType.equals(Long.class)) {
                             value=Long.valueOf(StringAdapter.getString(baseValue));
                         } else if (fieldType.equals(Date.class)) {

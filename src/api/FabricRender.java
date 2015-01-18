@@ -46,6 +46,12 @@ public final class FabricRender {
     public static FabricRender getInstance(ProjectSettings projectSettings) {
         return new FabricRender(projectSettings);
     }
+    
+    public final void setRenderConstant(RenderConstant rc){
+        if(rc!=null){
+            this.rc=rc;
+        }
+    }
 
     public final static AbsEnt img(String img, String width, String height, String style) throws Exception {
 
@@ -84,6 +90,7 @@ public final class FabricRender {
         ae.setAttribute(EnumAttrType.size, rc.TXT_INPUT_SIZE);
         ae.setAttribute(EnumAttrType.name, name);
         ae.setAttribute(EnumAttrType.placeholder, placeholder);
+        ae.setCss(rc.INPUT_CSS);
         ae.setValue(value);
         return ae;
     }
@@ -94,7 +101,7 @@ public final class FabricRender {
         ae.setAttribute(EnumAttrType.type, "text");
         ae.setAttribute(EnumAttrType.size, rc.TXT_INPUT_SIZE);
         ae.setAttribute(EnumAttrType.name, name);
-        ae.setCss("standart_datepicker");
+        ae.setCss(rc.INPUT_CSS+" standart_datepicker");
         ae.setAttribute(EnumAttrType.placeholder, placeholder);
         ae.setValue(dateFormat(value, getRenderConstant().DT_SMALL));
         return ae;
@@ -106,7 +113,7 @@ public final class FabricRender {
         ae.setAttribute(EnumAttrType.type, "text");
         ae.setAttribute(EnumAttrType.size, rc.TXT_INPUT_SIZE);
         ae.setAttribute(EnumAttrType.name, name);
-        ae.setCss("timepicker");
+        ae.setCss(rc.INPUT_CSS+" timepicker");
         ae.removeSingleAttribute(EnumAttrNoValue.readonly);
         ae.setAttribute(EnumAttrType.placeholder, placeholder);
         ae.setValue(dateFormat(value, getRenderConstant().DT_FULL));
@@ -119,6 +126,7 @@ public final class FabricRender {
         ae.setAttribute(EnumAttrType.type, "password");
         ae.setAttribute(EnumAttrType.size, rc.TXT_INPUT_SIZE);
         ae.setAttribute(EnumAttrType.name, name);
+        ae.setCss(rc.PASSWORD_CSS);
         ae.setAttribute(EnumAttrType.placeholder, placeholder);
         ae.setValue(value);
         return ae;
@@ -131,6 +139,7 @@ public final class FabricRender {
         ae.setAttribute(EnumAttrType.size, "15");
         ae.setAttribute(EnumAttrType.name, "submit");
         ae.setAttribute(EnumAttrType.title, name);
+        ae.setCss(rc.SUBMIT_CSS);
         ae.setValue(value);
         return ae;
     }
@@ -180,6 +189,7 @@ public final class FabricRender {
         ae.setAttribute(EnumAttrType.size, rc.TXT_INPUT_SIZE);
         ae.setAttribute(EnumAttrType.name, name);
         ae.setAttribute(EnumAttrType.placeholder, placeholder);
+        ae.setCss(rc.SUBMIT_CSS);
         ae.setValue(value);
         return ae;
     }
@@ -189,6 +199,7 @@ public final class FabricRender {
         ch = WebEnt.getEnt(WebEnt.Type.INPUT);
         ch.setAttribute(EnumAttrType.type, "checkbox").setAttribute(EnumAttrType.id, id);
         ch.setAttribute(EnumAttrType.name, name);
+        ch.setCss(rc.CHECKBOX_CSS);
         ch.setValue(1);
         if (checked == true) {
             ch.setJs(" " + ch.getJs() + " checked ");
@@ -202,6 +213,7 @@ public final class FabricRender {
         ch.setAttribute(EnumAttrType.type, "checkbox").setAttribute(EnumAttrType.id, id);
         ch.setAttribute(EnumAttrType.name, name);
         ch.setValue(value);
+        ch.setCss(rc.CHECKBOX_CSS);
         if (checked == true) {
             ch.setJs(" " + ch.getJs() + " checked ");
         }
@@ -220,6 +232,7 @@ public final class FabricRender {
         AbsEnt select;
         select = WebEnt.getEnt(WebEnt.Type.SELECT);
         select.setAttribute(EnumAttrType.name, name);
+        select.setCss(rc.SELECT_CSS);
         for (String st : map.keySet()) {
             AbsEnt option = WebEnt.getEnt(WebEnt.Type.OPTION);
             option.setValue(st);
@@ -263,6 +276,7 @@ public final class FabricRender {
         ae = WebEnt.getEnt(WebEnt.Type.TEXTAREA);
         ae.setAttribute(EnumAttrType.name, name);
         ae.setValue(ob);
+        ae.setCss(rc.TEXTAREA_CSS);
         ae.setAttribute(EnumAttrType.placeholder, placeholder);
         ae.setAttribute(EnumAttrType.rows, StringAdapter.getString(rows));
         ae.setAttribute(EnumAttrType.cols, StringAdapter.getString(cols));
@@ -335,6 +349,7 @@ public final class FabricRender {
         ae.setAttribute(EnumAttrType.cellspacing, sellspacing);
         ae.setAttribute(EnumAttrType.border, border);
         ae.setAttribute(EnumAttrType.id, id);
+        ae.setCss(rc.TABLE_CSS);
         return ae;
     }
 
@@ -668,6 +683,7 @@ public final class FabricRender {
                 if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
                     tr.addEnt(aee);
                 } else {
+                    aee.addAttribute(EnumAttrType.style,rc.FORM_ELEMENT_STYLE);
                     AbsEnt td1 = WebEnt.getEnt(WebEnt.Type.TD);
                     if (idMap != null && idMap.get(aee) != null) {
                         td1.setId(idMap.get(aee));
@@ -699,6 +715,7 @@ public final class FabricRender {
                 if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
                     table.addEnt(aee);
                 } else {
+                    aee.addAttribute(EnumAttrType.style,rc.FORM_ELEMENT_STYLE);
                     AbsEnt tr = WebEnt.getEnt(WebEnt.Type.TR);
                     if (idMap != null && idMap.get(aee) != null) {
                         tr.setId(idMap.get(aee));

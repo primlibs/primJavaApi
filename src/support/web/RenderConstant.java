@@ -37,6 +37,20 @@ public class RenderConstant {
   public String TXT_INPUT_SIZE="";
   public String SUBMITIMG_SIZE="";
   
+  public String BUTTON_CSS="";
+  public String SUBMIT_CSS="";
+  public String INPUT_CSS="";
+  public String PASSWORD_CSS="";
+  public String SELECT_CSS="form-control";
+  public String RADIO_CSS="";
+  public String CHECKBOX_CSS="";
+  public String TEXTAREA_CSS="";
+  public String TABLE_CSS="";
+  
+  public String FORM_VERTICAL_CSS="";
+  public String FORM_HORIZONTAL_CSS="";
+  public String FORM_ELEMENT_STYLE="";
+  
   public RenderConstant(){
     
   }

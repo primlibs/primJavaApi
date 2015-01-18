@@ -87,12 +87,6 @@ public class WebEnt implements AbsEnt {
     data.removeSingleAttribute(singleAttribute);
     return this;
   }
-
-  @Override
-  public final AbsEnt setAttribute(String name, String value) {
-    data.setAttribute(name, value);
-    return this;
-  }
   
   @Override
   public final AbsEnt setAttribute(EnumAttrType type, String value) {

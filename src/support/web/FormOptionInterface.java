@@ -177,5 +177,5 @@ public interface FormOptionInterface {
   /*
    * возвращает тип обработчика по onclick
    */
-  public String getJshandler();
+  public String getJshandler();  
 }

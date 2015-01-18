@@ -29,7 +29,6 @@ public interface AbsEnt {
    */
   public AbsEnt setSingleAttribute(EnumAttrNoValue singleAttribute);
 
-  public AbsEnt setAttribute(String name, String value);
   
   /**
    * Удаляет аттрибут без значения, возвращает сущьность, к которой аттрибут был

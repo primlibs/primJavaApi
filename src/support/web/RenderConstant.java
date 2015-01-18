@@ -47,7 +47,8 @@ public class RenderConstant {
   public String TEXTAREA_CSS="";
   public String TABLE_CSS="";
   
-  public String FORM_ELEMENT_STYLE="";
+  public String FORM_VERTICAL_CSS="";
+  public String FORM_HORIZONTAL_CSS="";
   
   public RenderConstant(){
     

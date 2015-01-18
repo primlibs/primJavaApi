@@ -656,6 +656,7 @@ public final class FabricRender {
         AbsEnt ae = form(fo.isFile());
         AbsEnt table = WebEnt.getEnt(WebEnt.Type.TABLE);
         ae.addEnt(table);
+        ae.setCss(rc.FORM_HORIZONTAL_CSS);
         AbsEnt tr = WebEnt.getEnt(WebEnt.Type.TR);
         table.addEnt(tr);
         Map<AbsEnt, String> idMap = fo.getIdMap();
@@ -683,7 +684,6 @@ public final class FabricRender {
                 if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
                     tr.addEnt(aee);
                 } else {
-                    aee.addAttribute(EnumAttrType.style,rc.FORM_ELEMENT_STYLE);
                     AbsEnt td1 = WebEnt.getEnt(WebEnt.Type.TD);
                     if (idMap != null && idMap.get(aee) != null) {
                         td1.setId(idMap.get(aee));
@@ -707,6 +707,7 @@ public final class FabricRender {
 
     private AbsEnt verticalForm(Map<AbsEnt, String> inner, FormOptionInterface fo) throws Exception {
         AbsEnt ae = form(fo.isFile());
+        ae.setCss(rc.FORM_VERTICAL_CSS);
         AbsEnt table = WebEnt.getEnt(WebEnt.Type.TABLE);
         ae.addEnt(table);
         Map<AbsEnt, String> idMap = fo.getIdMap();
@@ -715,7 +716,6 @@ public final class FabricRender {
                 if (aee.getAttribute(EnumAttrType.type).equals("hidden")) {
                     table.addEnt(aee);
                 } else {
-                    aee.addAttribute(EnumAttrType.style,rc.FORM_ELEMENT_STYLE);
                     AbsEnt tr = WebEnt.getEnt(WebEnt.Type.TR);
                     if (idMap != null && idMap.get(aee) != null) {
                         tr.setId(idMap.get(aee));

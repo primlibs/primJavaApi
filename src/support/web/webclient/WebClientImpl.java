@@ -4,6 +4,7 @@ import support.UploadedFile;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -97,8 +98,20 @@ public class WebClientImpl implements WebClient {
         checkParamsOnSpecName(str, request.getParameter(str));
       }
     }
+    createInnerSession();
   }
 
+  private void createInnerSession(){
+       Enumeration eNames = request.getSession().getAttributeNames();
+          while (eNames.hasMoreElements()) {
+            String attributeName = (String) eNames.nextElement();
+            if (!attributeName.equals("key") && !attributeName.equals("cron")
+                    && !attributeName.equals("system")) {
+              innerSession.put(attributeName, request.getSession().getAttribute(attributeName));
+            }
+          }
+  }
+  
   /**
    * разбирает запрос вида Multipart
    *

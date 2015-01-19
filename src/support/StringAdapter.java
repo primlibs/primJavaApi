@@ -150,7 +150,7 @@ public class StringAdapter {
         }
         return res;
     }
-
+    
     /**
      * возвращает true, если параметр равен null либо пустой строке
      *

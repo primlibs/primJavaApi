@@ -21,5 +21,5 @@ import support.enums.Validators;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Validator {
     Validators type();
-    String value();
+    String value()default "";
 }

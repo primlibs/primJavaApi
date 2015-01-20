@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package support.commons.db;
+package support.commons;
 
 import support.commons.*;
 import java.lang.annotation.ElementType;
@@ -20,5 +20,6 @@ import support.enums.Validators;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Validator {
-    Validators[] value();
+    Validators type();
+    String value();
 }

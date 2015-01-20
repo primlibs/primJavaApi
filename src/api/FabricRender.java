@@ -13,7 +13,7 @@ import java.util.Map;
 import org.apache.commons.codec.binary.Base64;
 import support.StringAdapter;
 import support.db.executor.Row;
-import support.enums.Validators;
+import support.enums.ValidatorTypes;
 import support.filterValidator.ChainValidator;
 import support.settings.ProjectSettings;
 import support.web.AbsEnt;
@@ -291,7 +291,7 @@ public final class FabricRender {
             ChainValidator cv = new ChainValidator();
             HashMap<String, Object> hs = new HashMap<String, Object>();
             hs.put("format", format);
-            cv.addChain(Validators.DATETOFORMATFILTER, hs);
+            cv.addChain(ValidatorTypes.DATETOFORMATFILTER, hs);
             cv.execute(ob);
             if (cv.getData() != null) {
                 res = cv.getData().toString();
@@ -366,7 +366,7 @@ public final class FabricRender {
     public String renderDecimal(Object data) {
         if (data != null) {
             ChainValidator chain = new ChainValidator();
-            chain.addChain(Validators.DECIMALFILTER);
+            chain.addChain(ValidatorTypes.DECIMALFILTER);
             chain.execute(data);
             return chain.getData().toString();
         } else {

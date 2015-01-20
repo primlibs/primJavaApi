@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import support.enums.Validators;
+import support.enums.ValidatorTypes;
 import support.filterValidator.ChainValidator;
 
 /**
@@ -65,8 +65,8 @@ public class DateAdapter {
     HashMap<String, Object> params = new HashMap();
     params.put("format", DateAdapter.getFormatMysql());
     ChainValidator chain = ChainValidator.getInstance();
-    chain.addChain(Validators.DATETOFORMATFILTER, params);
-    chain.addChain(Validators.DATEFORMATVALIDATOR, params);
+    chain.addChain(ValidatorTypes.DATETOFORMATFILTER, params);
+    chain.addChain(ValidatorTypes.DATEFORMATVALIDATOR, params);
     chain.execute(str);
     if (chain.getErrors().isEmpty()) {
       return chain.getData().toString();
@@ -97,8 +97,8 @@ public class DateAdapter {
     ChainValidator chain = ChainValidator.getInstance();
     HashMap<String, Object> hs = new HashMap<String, Object>();
     hs.put("format", DateAdapter.getFormatMysql());
-    chain.addChain(Validators.DATETOFORMATFILTER, hs);
-    chain.addChain(Validators.DATEFORMATVALIDATOR, hs);
+    chain.addChain(ValidatorTypes.DATETOFORMATFILTER, hs);
+    chain.addChain(ValidatorTypes.DATEFORMATVALIDATOR, hs);
     try {
     if (chain.execute(str)) {
       SimpleDateFormat formatter = new SimpleDateFormat(DateAdapter.getFormatMysql());
@@ -132,7 +132,7 @@ public class DateAdapter {
       ChainValidator cv = ChainValidator.getInstance();
       HashMap<String, Object> hs = new HashMap<String, Object>();
       hs.put("format", format);
-      cv.addChain(Validators.DATETOFORMATFILTER, hs);
+      cv.addChain(ValidatorTypes.DATETOFORMATFILTER, hs);
       cv.execute(date);
       if (cv.getData() != null) {
         res = cv.getData().toString();

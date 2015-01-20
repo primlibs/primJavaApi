@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import support.StringAdapter;
-import support.enums.Validators;
+import support.enums.ValidatorTypes;
 
 /**
  * базовый класс для всех классов фильтров и валидаторов.
@@ -58,23 +58,23 @@ public abstract class ValidatorAbstract implements Cloneable, Serializable {
    * @throws IllegalAccessException
    * @throws InstantiationException
    */
-  public static ValidatorAbstract getValidator(Validators type) throws Exception {
+  public static ValidatorAbstract getValidator(ValidatorTypes type) throws Exception {
     try {
-     if(type.equals(Validators.DATEFORMATVALIDATOR)){
+     if(type.equals(ValidatorTypes.DATEFORMATVALIDATOR)){
          return new DateFormatValidator();
-     }else if(type.equals(Validators.DATETOFORMATFILTER)){
+     }else if(type.equals(ValidatorTypes.DATETOFORMATFILTER)){
          return new DateToFormatFilter();
-     }else if(type.equals(Validators.DECIMALFILTER)){
+     }else if(type.equals(ValidatorTypes.DECIMALFILTER)){
          return new DecimalFilter();
-     }else if(type.equals(Validators.DECIMALVALIDATOR)){
+     }else if(type.equals(ValidatorTypes.DECIMALVALIDATOR)){
          return new DecimalValidator();
-     }else if(type.equals(Validators.NOTNULLSTRINGVALIDATOR)){
+     }else if(type.equals(ValidatorTypes.NOTNULLSTRINGVALIDATOR)){
          return new NotNullStringValidator();
-     }else if(type.equals(Validators.DIGITSFILTER)){
+     }else if(type.equals(ValidatorTypes.DIGITSFILTER)){
          return new DigitsFilter();
-     }else if(type.equals(Validators.DIGITSVALIDATOR)){
+     }else if(type.equals(ValidatorTypes.DIGITSVALIDATOR)){
          return new DigitsValidator();
-     }else if(type.equals(Validators.PERCENTVALIDATOR)){
+     }else if(type.equals(ValidatorTypes.PERCENTVALIDATOR)){
          return new PercentValidator();
      }else{
          throw new Exception ("validator name "+type+" not supported yet");

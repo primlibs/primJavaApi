@@ -10,7 +10,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import support.enums.Validators;
+import support.enums.ValidatorTypes;
 
 /**
  *
@@ -20,6 +20,6 @@ import support.enums.Validators;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Validator {
-    Validators type();
+    ValidatorTypes type();
     String value()default "";
 }

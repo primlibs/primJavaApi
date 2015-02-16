@@ -9,7 +9,7 @@ import java.lang.reflect.*;
 import java.util.HashMap;
 import java.util.List;
 import support.StringAdapter;
-import support.enums.Validators;
+import support.enums.ValidatorTypes;
 import support.filterValidator.entity.ValidatorAbstract;
 
 /**
@@ -36,9 +36,9 @@ public class ChainValidator {
    */
   private final String systemError = "Системная ошибка.";
 
-  public static ChainValidator getInstance(Validators... validatorName){
+  public static ChainValidator getInstance(ValidatorTypes... validatorName){
     ChainValidator result= new ChainValidator();
-    for(Validators name:validatorName){
+    for(ValidatorTypes name:validatorName){
       if(StringAdapter.NotNull(name)){
         result.addChain(name);
       }
@@ -80,7 +80,7 @@ public class ChainValidator {
    * @param terminate - прерывать ли цепочку валидации
    * @param errorMessage - сообщение об ошибке
    */
-  public void addChain(Validators objectName, Map<String, Object> params, boolean terminate, String errorMessage, String classPath) {
+  public void addChain(ValidatorTypes objectName, Map<String, Object> params, boolean terminate, String errorMessage, String classPath) {
     try {
       // создать объект валидатора
       ValidatorAbstract object = ValidatorAbstract.getValidator(objectName);
@@ -111,7 +111,7 @@ public class ChainValidator {
    * @param params - массив параметров
    * @param terminate - прерывать ли цепочку валидации
    */
-  public void addChain(Validators objectName, Map<String, Object> params, boolean terminate) {
+  public void addChain(ValidatorTypes objectName, Map<String, Object> params, boolean terminate) {
     addChain(objectName, params, terminate, null, null);
   }
 
@@ -121,7 +121,7 @@ public class ChainValidator {
    * @param objectName - название класса фильтра или валидатора
    * @param params - массив параметров
    */
-  public void addChain(Validators objectName, Map<String, Object> params) {
+  public void addChain(ValidatorTypes objectName, Map<String, Object> params) {
     addChain(objectName, params, false, null, null);
   }
 
@@ -130,7 +130,7 @@ public class ChainValidator {
    *
    * @param objectName - название класса фильтра или валидатора
    */
-  public void addChain(Validators objectName) {
+  public void addChain(ValidatorTypes objectName) {
     HashMap<String, Object> params = new HashMap<String, Object>();
     addChain(objectName, params, false, null, null);
   }

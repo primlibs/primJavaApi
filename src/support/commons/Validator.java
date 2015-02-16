@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package support.commons.db;
+package support.commons;
 
 import support.commons.*;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import support.enums.Validators;
+import support.enums.ValidatorTypes;
 
 /**
  *
@@ -20,5 +20,6 @@ import support.enums.Validators;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Validator {
-    Validators[] value();
+    ValidatorTypes type();
+    String value()default "";
 }

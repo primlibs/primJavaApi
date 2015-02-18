@@ -221,5 +221,11 @@ public class StringAdapter {
             return 0.00;
         }
     } 
+    
+    public static ChainValidator toDoubleChain(String value){
+        ChainValidator chVal= ChainValidator.getInstance(ValidatorTypes.DECIMALFILTER);
+        chVal.execute(value);
+        return chVal;
+    } 
 
 }

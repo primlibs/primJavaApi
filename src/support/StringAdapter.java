@@ -216,7 +216,7 @@ public class StringAdapter {
         ChainValidator chVal= ChainValidator.getInstance(ValidatorTypes.DECIMALFILTER);
         chVal.execute(value);
         if(chVal.getErrors().isEmpty()){
-            return (double) chVal.getData();
+            return Double.valueOf(getString(chVal.getData()));
         }else{
             return 0.00;
         }

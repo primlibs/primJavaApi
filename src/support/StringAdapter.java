@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import support.enums.ValidatorTypes;
+import support.filterValidator.ChainValidator;
 
 /**
  *
@@ -208,5 +210,16 @@ public class StringAdapter {
         }
         return result;
     }
+     
+     
+    public static Double toDouble(String value){
+        ChainValidator chVal= ChainValidator.getInstance(ValidatorTypes.DECIMALFILTER);
+        chVal.execute(value);
+        if(chVal.getErrors().isEmpty()){
+            return (double) chVal.getData();
+        }else{
+            return 0.00;
+        }
+    } 
 
 }

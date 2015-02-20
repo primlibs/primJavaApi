@@ -21,8 +21,8 @@ import java.util.zip.ZipFile;
  */
 public class FileManager {
 
-    public static void unpackZip(String path, String dir_to) throws IOException {
-        ZipFile zip = new ZipFile(path);
+    public static void unpackZip(File zipFile, String dir_to) throws IOException {
+        ZipFile zip = new ZipFile(zipFile);
         Enumeration entries = zip.entries();
         LinkedList<ZipEntry> zfiles = new LinkedList<ZipEntry>();
         File dir = new File(dir_to);
@@ -33,7 +33,7 @@ public class FileManager {
         while (entries.hasMoreElements()) {
             ZipEntry entry = (ZipEntry) entries.nextElement();
             if (entry.isDirectory()) {
-                new File(dir_to + "/" + entry.getName()).mkdirs();
+                new File(dir_to + File.separator + entry.getName()).mkdirs();
             } else {
                 zfiles.add(entry);
             }

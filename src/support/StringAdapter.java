@@ -240,15 +240,19 @@ public class StringAdapter {
 
     public static String HSSFSellValue(Cell cl) {
         int cellType = cl.getCellType();
-        switch (cellType) {
-            case Cell.CELL_TYPE_STRING:
-                return cl.getStringCellValue();
-            case Cell.CELL_TYPE_NUMERIC:
-                getString(cl.getNumericCellValue());
-            case Cell.CELL_TYPE_FORMULA:
-                getString(cl.getNumericCellValue());
-            default:
-                return "";
+        if (NotNull(cl.toString())) {
+            return cl.toString();
+        } else {
+            switch (cellType) {
+                case Cell.CELL_TYPE_STRING:
+                    return cl.getStringCellValue();
+                case Cell.CELL_TYPE_NUMERIC:
+                    getString(cl.getNumericCellValue());
+                case Cell.CELL_TYPE_FORMULA:
+                    getString(cl.getNumericCellValue());
+                default:
+                    return "";
+            }
         }
     }
 }

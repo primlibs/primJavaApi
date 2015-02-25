@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.poi.ss.usermodel.Cell;
 import support.enums.ValidatorTypes;
 import support.filterValidator.ChainValidator;
 
@@ -152,7 +153,7 @@ public class StringAdapter {
         }
         return res;
     }
-    
+
     /**
      * возвращает true, если параметр равен null либо пустой строке
      *
@@ -166,15 +167,15 @@ public class StringAdapter {
     public static String getStringFromList(List<String> strList) {
         String result = "";
         for (String obj : strList) {
-            result +=" "+obj;
+            result += " " + obj;
         }
         return result;
     }
-    
+
     public static String getStringFromObjectList(List<Object> strList) {
         String result = "";
         for (Object obj : strList) {
-            result +=" "+StringAdapter.getString(obj);
+            result += " " + StringAdapter.getString(obj);
         }
         return result;
     }
@@ -198,8 +199,8 @@ public class StringAdapter {
         }
         return result;
     }
-    
-     public static List<String> cloneList(List<String> request) {
+
+    public static List<String> cloneList(List<String> request) {
         List<String> result = new ArrayList();
         if (request != null) {
             for (String param : request) {
@@ -210,32 +211,44 @@ public class StringAdapter {
         }
         return result;
     }
-     
-     
-    public static Double toDouble(String value){
-        ChainValidator chVal= ChainValidator.getInstance(ValidatorTypes.DECIMALFILTER);
+
+    public static Double toDouble(String value) {
+        ChainValidator chVal = ChainValidator.getInstance(ValidatorTypes.DECIMALFILTER);
         chVal.execute(value);
-        if(chVal.getErrors().isEmpty()){
+        if (chVal.getErrors().isEmpty()) {
             return Double.valueOf(getString(chVal.getData()));
-        }else{
+        } else {
             return 0.00;
         }
-    } 
-    
-    public static ChainValidator toDoubleChain(String value){
-        ChainValidator chVal= ChainValidator.getInstance(ValidatorTypes.DECIMALFILTER);
+    }
+
+    public static ChainValidator toDoubleChain(String value) {
+        ChainValidator chVal = ChainValidator.getInstance(ValidatorTypes.DECIMALFILTER);
         chVal.execute(value);
         return chVal;
-    } 
-    
-    public static Long toLong(String value){
-        ChainValidator chVal= ChainValidator.getInstance(ValidatorTypes.DIGITSVALIDATOR);
+    }
+
+    public static Long toLong(String value) {
+        ChainValidator chVal = ChainValidator.getInstance(ValidatorTypes.DIGITSVALIDATOR);
         chVal.execute(value);
-        if(chVal.getErrors().isEmpty()){
+        if (chVal.getErrors().isEmpty()) {
             return Long.valueOf(getString(chVal.getData()));
-        }else{
+        } else {
             return Long.valueOf(0);
         }
-    } 
+    }
 
+    public static String HSSFSellValue(Cell cl) {
+        int cellType = cl.getCellType();
+        switch (cellType) {
+            case Cell.CELL_TYPE_STRING:
+                return cl.getStringCellValue();
+            case Cell.CELL_TYPE_NUMERIC:
+                getString(cl.getNumericCellValue());
+            case Cell.CELL_TYPE_FORMULA:
+                getString(cl.getNumericCellValue());
+            default:
+                return "";
+        }
+    }
 }

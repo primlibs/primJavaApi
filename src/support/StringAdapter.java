@@ -227,5 +227,15 @@ public class StringAdapter {
         chVal.execute(value);
         return chVal;
     } 
+    
+    public static Long toLong(String value){
+        ChainValidator chVal= ChainValidator.getInstance(ValidatorTypes.DIGITSVALIDATOR);
+        chVal.execute(value);
+        if(chVal.getErrors().isEmpty()){
+            return Long.valueOf(getString(chVal.getData()));
+        }else{
+            return Long.valueOf(0);
+        }
+    } 
 
 }

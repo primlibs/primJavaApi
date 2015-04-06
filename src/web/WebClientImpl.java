@@ -14,7 +14,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import support.UploadedFile;
 import support.settings.ProjectSettings;
 
-public class StandartWebClientImpl implements WebClient {
+public class WebClientImpl implements WebClient {
   // объект Web-запроса
   private HttpServletRequest request;
 
@@ -30,7 +30,7 @@ public class StandartWebClientImpl implements WebClient {
   private HashMap<String, String> filearray = new HashMap<String, String>();
 
 
-  public StandartWebClientImpl(HttpServletRequest request,ProjectSettings ps) throws Exception {
+  public WebClientImpl(HttpServletRequest request,ProjectSettings ps) throws Exception {
     this.request = request;
     this.ps=ps;
     checkRequest();

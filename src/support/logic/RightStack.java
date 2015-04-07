@@ -16,7 +16,7 @@ import support.StringAdapter;
 public class RightStack {
     private List<Right> rights= new ArrayList();
     
-    private RightStack(){
+    public RightStack(){
         
     }
     

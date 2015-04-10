@@ -24,12 +24,10 @@ public class RightStack {
         return new RightStack();
     }
     
-    public void add(String object,String action) throws Exception{
-            rights.add(Right.valueOf(object, action));
-    }
-    
     public void add(String object,String action,String objectDescription,String actionDescription) throws Exception{
-            rights.add(Right.valueOf(object, action,objectDescription,actionDescription));
+            if(!isRight(object, action)){
+                rights.add(Right.valueOf(object, action,objectDescription,actionDescription));
+            }
     }
     
     public boolean isRight(String object,String action){

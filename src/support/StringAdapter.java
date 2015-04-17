@@ -118,7 +118,7 @@ public class StringAdapter {
         }
     }
 
-    public static String getStackTraceException(Exception e) {
+    public static String getStackTraceException(Throwable e) {
         String res = "";
         if (e != null) {
             StringWriter sw = new StringWriter();
@@ -228,7 +228,7 @@ public class StringAdapter {
         return chVal;
     }
 
-    public static Long toLong(String value) {
+    public static Long toLong(Object value) {
         ChainValidator chVal = ChainValidator.getInstance(ValidatorTypes.DIGITSVALIDATOR);
         chVal.execute(value);
         if (chVal.getErrors().isEmpty()) {

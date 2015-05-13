@@ -240,6 +240,15 @@ public class StringAdapter {
 
     public static Integer toInteger(Object value) {
         if (value != null) {
+            return toInteger(value.toString());
+        }else{
+            return null;
+        }
+
+    }
+    
+    public static Integer toInteger(String value) {
+        if (value != null) {
             ChainValidator chVal = ChainValidator.getInstance(ValidatorTypes.DIGITSVALIDATOR);
             chVal.execute(value);
             if (chVal.getErrors().isEmpty()) {

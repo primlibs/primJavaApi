@@ -14,28 +14,36 @@ import support.StringAdapter;
  * @author Кот
  */
 public class RightStack {
+    private String objectPrefix="";
     private List<Right> rights= new ArrayList();
     
-    private RightStack(){
-        
+    public RightStack(String prefix){
+        if(prefix!=null){
+            this.objectPrefix=prefix;
+        }
     }
     
     public static RightStack getInstance(){
-        return new RightStack();
+        return new RightStack(null);
     }
     
-    public void add(String object,String action) throws Exception{
-            rights.add(Right.valueOf(object, action));
+    public static RightStack getInstance(String prefix){
+        return new RightStack(prefix);
     }
     
-    public void add(String object,String action,String objectDescription,String actionDescription) throws Exception{
-            rights.add(Right.valueOf(object, action,objectDescription,actionDescription));
+    public Right add(String object,String action,String objectDescription,String actionDescription) throws Exception{
+            Right rt=Right.valueOf(object, action,objectDescription,actionDescription);
+            if(!isRight(object, action)){
+                rights.add(rt);
+            }
+            return rt;
     }
     
     public boolean isRight(String object,String action){
         boolean result =false;
         for(Right right:rights){
-            if(right.getObject().equals(object)&&right.getAction().equals(action)){
+            if((right.getObject().equals(object)&&right.getAction().equals(action))
+                    ||(right.getObject().equals(objectPrefix+""+object)&&right.getAction().equals(action))){
                 result=true;
                 break;
             }

@@ -76,6 +76,8 @@ public class Persistence {
         return result;
     }
 
+    
+    
     public RightStack createRightsFromJar(Class startclass) throws Exception {
         RightStack result = RightStack.getInstance();
         Collection string = JarScan.scanClasses(JarScan.getFilePathToClasses(startclass));
@@ -99,5 +101,5 @@ public class Persistence {
         }
         return result;
     }
-
+    
 }

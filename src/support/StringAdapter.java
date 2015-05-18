@@ -118,7 +118,7 @@ public class StringAdapter {
         }
     }
 
-    public static String getStackTraceException(Exception e) {
+    public static String getStackTraceException(Throwable e) {
         String res = "";
         if (e != null) {
             StringWriter sw = new StringWriter();
@@ -228,7 +228,7 @@ public class StringAdapter {
         return chVal;
     }
 
-    public static Long toLong(String value) {
+    public static Long toLong(Object value) {
         ChainValidator chVal = ChainValidator.getInstance(ValidatorTypes.DIGITSVALIDATOR);
         chVal.execute(value);
         if (chVal.getErrors().isEmpty()) {
@@ -236,6 +236,30 @@ public class StringAdapter {
         } else {
             return Long.valueOf(0);
         }
+    }
+
+    public static Integer toInteger(Object value) {
+        if (value != null) {
+            return toInteger(value.toString());
+        }else{
+            return null;
+        }
+
+    }
+    
+    public static Integer toInteger(String value) {
+        if (value != null) {
+            ChainValidator chVal = ChainValidator.getInstance(ValidatorTypes.DIGITSVALIDATOR);
+            chVal.execute(value);
+            if (chVal.getErrors().isEmpty()) {
+                return Integer.valueOf(getString(chVal.getData()));
+            } else {
+                return Integer.valueOf(0);
+            }
+        }else{
+            return null;
+        }
+
     }
 
     public static String HSSFSellValue(Cell cl) {

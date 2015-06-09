@@ -263,6 +263,9 @@ public class StringAdapter {
     }
 
     public static String HSSFSellValue(Cell cl) {
+        if(cl==null){
+            return "";
+        }
         int cellType = cl.getCellType();
         if (NotNull(cl.toString())) {
             return cl.toString();

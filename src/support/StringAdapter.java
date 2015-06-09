@@ -271,9 +271,9 @@ public class StringAdapter {
                 case Cell.CELL_TYPE_STRING:
                     return cl.getStringCellValue();
                 case Cell.CELL_TYPE_NUMERIC:
-                    getString(cl.getNumericCellValue());
+                    return getString(cl.getNumericCellValue());
                 case Cell.CELL_TYPE_FORMULA:
-                    getString(cl.getNumericCellValue());
+                    return getString(cl.getNumericCellValue());
                 default:
                     return "";
             }

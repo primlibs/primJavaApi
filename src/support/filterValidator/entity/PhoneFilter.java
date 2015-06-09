@@ -1,6 +1,7 @@
 package support.filterValidator.entity;
 
 import java.util.Iterator;
+import support.StringAdapter;
 
 /**
  * преобразовать строку к числу и отформатировать в "денежном" формате
@@ -16,7 +17,7 @@ public class PhoneFilter extends ValidatorAbstract {
   
   @Override
   public boolean execute() {
-    String str = data.toString().trim();
+    String str = StringAdapter.getString(data);
     if(str.length()==10){
       str=firstDigit+str;
       data=str;

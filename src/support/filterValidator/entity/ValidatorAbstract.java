@@ -147,7 +147,7 @@ public abstract class ValidatorAbstract implements Cloneable, Serializable {
     if(StringAdapter.NotNull(data)==true){
       this.data = data;
     }else{
-      this.data= new Object();
+      this.data= (Object)"";
     }
   }
 

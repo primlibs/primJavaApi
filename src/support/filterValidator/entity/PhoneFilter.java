@@ -16,7 +16,7 @@ public class PhoneFilter extends ValidatorAbstract {
   
   @Override
   public boolean execute() {
-    String str = data.toString();
+    String str = data.toString().trim();
     if(str.length()==10){
       str=firstDigit+str;
       data=str;

@@ -16,6 +16,8 @@ import support.StringAdapter;
 public class RightStack {
     private String objectPrefix="";
     private List<Right> rights= new ArrayList();
+    private List<String> log= new ArrayList();
+    private boolean isLogged=false;
     
     public RightStack(String prefix){
         if(prefix!=null){
@@ -41,11 +43,22 @@ public class RightStack {
     
     public boolean isRight(String object,String action){
         boolean result =false;
+        if(isLogged==true){
+            log.add("checkRights object:"+object+" action: "+action+"prefix: "+objectPrefix);
+        }
+        
         for(Right right:rights){
             if((right.getObject().equals(object)&&right.getAction().equals(action))
                     ||(right.getObject().equals(objectPrefix+""+object)&&right.getAction().equals(action))){
                 result=true;
+                if(isLogged==true){
+                    log.add("true - " +right.getObject()+"  "+right.getAction());
+                }
                 break;
+            }else{
+                if(isLogged==true){
+                    log.add("false - "  +right.getObject()+"  "+right.getAction());
+                }
             }
         }
         return result;
@@ -59,4 +72,11 @@ public class RightStack {
         return result;
     }
     
+    public List<String> getLog(){
+        return log;
+    }
+    
+    public void setIsLogged(boolean isLogged){
+        this.isLogged=isLogged;
+    }
 }

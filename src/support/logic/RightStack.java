@@ -44,7 +44,7 @@ public class RightStack {
     public boolean isRight(String object,String action){
         boolean result =false;
         if(isLogged==true){
-            log.add("checkRights object:"+object+" action: "+action+"prefix: "+objectPrefix);
+            log.add("checkRights object:"+object+" action: "+action+" prefix: "+objectPrefix);
         }
         
         for(Right right:rights){

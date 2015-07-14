@@ -76,6 +76,8 @@ public abstract class ValidatorAbstract implements Cloneable, Serializable {
          return new DigitsValidator();
      }else if(type.equals(ValidatorTypes.PERCENTVALIDATOR)){
          return new PercentValidator();
+     }else if(type.equals(ValidatorTypes.PHONEFILTER)){
+         return new PhoneFilter();
      }else{
          throw new Exception ("validator name "+type+" not supported yet");
      }
@@ -145,7 +147,7 @@ public abstract class ValidatorAbstract implements Cloneable, Serializable {
     if(StringAdapter.NotNull(data)==true){
       this.data = data;
     }else{
-      this.data= new Object();
+      this.data= (Object)"";
     }
   }
 

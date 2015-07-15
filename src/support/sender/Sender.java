@@ -33,21 +33,14 @@ public abstract class Sender {
    * @return
    * @throws Exception 
    */
-  public static Sender getInstance(Object name) throws Exception {
-
-    if (name == null) {
-      throw new Exception("name is null");
+  public static Sender getInstance(Senders type) throws Exception{
+    Sender sender=null;
+    if (type.equals(Senders.MAIL)) {
+      sender= new MailSender();
     } else {
-      Sender sender;
-      name = StringAdapter.ucFirst(name.toString());
-      try {
-        sender = (Sender) Class.forName("com.prim.support.sender." + name).newInstance();
-      } catch (Exception eq) {
-        throw new Exception("Sender not found " + "prim.libs.sender." + name + " ");
-      }
-      return sender;
+      throw new Exception("Type not found "+type);
     }
-
+    return sender;
   }
 
   /**
@@ -122,4 +115,9 @@ public abstract class Sender {
    * @return 
    */
   protected abstract Object getProp(Object name);
+  
+  
+  public static enum Senders{
+      MAIL
+  }
 }
